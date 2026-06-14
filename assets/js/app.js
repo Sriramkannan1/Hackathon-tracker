@@ -17,28 +17,44 @@ const STORAGE_KEYS = {
 /* =====================================================
    DEMO USER
 ===================================================== */
+const APP_VERSION = "2.0";
 
 function initializeDemoUser() {
 
-    const users = JSON.parse(
-        localStorage.getItem(STORAGE_KEYS.USERS)
-    ) || [];
+    const savedVersion =
+        localStorage.getItem(
+            "app_version"
+        );
 
-    if (users.length === 0) {
+    if (savedVersion !== APP_VERSION) {
 
-        users.push({
-            email: "teamalgotex@gmail.com",
-            password: "AlgoTex",
-            role: "Admin"
-        });
+        const users = [
+            {
+                email: "teamalgotex@gmail.com",
+                password: "AlgoTex",
+                role: "Admin"
+            }
+        ];
 
         localStorage.setItem(
             STORAGE_KEYS.USERS,
             JSON.stringify(users)
         );
+
+        localStorage.removeItem(
+            STORAGE_KEYS.CURRENT_USER
+        );
+
+        localStorage.setItem(
+            "app_version",
+            APP_VERSION
+        );
+
+        console.log(
+            "User credentials updated."
+        );
     }
 }
-
 initializeDemoUser();
 
 /* =====================================================
