@@ -27,8 +27,8 @@ function initializeDemoUser() {
     if (users.length === 0) {
 
         users.push({
-            email: "admin@gmail.com",
-            password: "123456",
+            email: "teamalgotex@gmail.com",
+            password: "AlgoTex",
             role: "Admin"
         });
 
