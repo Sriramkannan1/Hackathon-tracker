@@ -1,0 +1,315 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Hackathon Command Center</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ======================================
+         SIDEBAR
+    ======================================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+                <h2>Hackathon Hub</h2>
+                <span>Command Center</span>
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html" class="active">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register Hackathon</span>
+            </a>
+
+            <a href="agenda.html">
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="calendar.html">
+                <i class="fas fa-calendar-days"></i>
+                <span>Calendar</span>
+            </a>
+
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a href="#" onclick="logoutUser()">
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- ======================================
+         MAIN CONTENT
+    ======================================= -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Monitor hackathons, deadlines,
+                    tasks and progress from one place.
+                </p>
+
+            </div>
+
+            <a href="register.html"
+               class="btn btn-primary">
+
+                <i class="fas fa-plus"></i>
+                New Hackathon
+
+            </a>
+
+        </div>
+
+        <!-- ======================================
+             STATS
+        ======================================= -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Hackathons
+                </div>
+
+                <div class="stat-value"
+                     id="totalHackathons">
+                    0
+                </div>
+
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Upcoming Deadlines
+                </div>
+
+                <div class="stat-value"
+                     id="upcomingDeadlines">
+                    0
+                </div>
+
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Pending Tasks
+                </div>
+
+                <div class="stat-value"
+                     id="pendingTasks">
+                    0
+                </div>
+
+                <div class="stat-icon">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Completed Tasks
+                </div>
+
+                <div class="stat-value"
+                     id="completedTasks">
+                    0
+                </div>
+
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             QUICK ACTIONS
+        ======================================= -->
+
+        <div class="card"
+             style="margin-bottom:25px;">
+
+            <div class="card-header">
+
+                <h3 class="card-title">
+                    Quick Actions
+                </h3>
+
+            </div>
+
+            <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:15px;
+            ">
+
+                <a href="register.html"
+                   class="btn btn-primary">
+
+                    Register Hackathon
+
+                </a>
+
+                <a href="agenda.html"
+                   class="btn btn-success">
+
+                    View Agenda
+
+                </a>
+
+                <a href="recommendations.html"
+                   class="btn btn-primary">
+
+                    Recommendations
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             RECENT HACKATHONS
+        ======================================= -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3 class="card-title">
+                    Recent Hackathons
+                </h3>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Hackathon
+                        </th>
+
+                        <th>
+                            Organizer
+                        </th>
+
+                        <th>
+                            Rounds
+                        </th>
+
+                        <th>
+                            Added On
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="recentHackathons">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+             FOOTER
+        ======================================= -->
+
+        <div class="footer">
+
+            © 2026 Hackathon Command Center
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script>
+
+    checkAuth();
+
+    loadDashboard();
+
+</script>
+
+</body>
+
+</html>
+```

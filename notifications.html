@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Notifications | Hackathon Command Center
+</title>
+
+<link
+rel="stylesheet"
+href="assets/css/style.css">
+
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Hackathon Hub
+                </h2>
+
+                <span>
+                    Command Center
+                </span>
+
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register</span>
+            </a>
+
+            <a href="agenda.html">
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="calendar.html">
+                <i class="fas fa-calendar-days"></i>
+                <span>Calendar</span>
+            </a>
+
+            <a
+                href="notifications.html"
+                class="active">
+
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+
+            </a>
+
+            <a
+                href="#"
+                onclick="logoutUser()">
+
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Notifications Center
+                </h1>
+
+                <p>
+                    Deadlines, rounds and important alerts.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SUMMARY CARDS -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    24 Hour Alerts
+                </div>
+
+                <div class="stat-value">
+                    🚨
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Upcoming Deadlines
+                </div>
+
+                <div class="stat-value">
+                    ⏳
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Round Alerts
+                </div>
+
+                <div class="stat-value">
+                    🏆
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Submission Alerts
+                </div>
+
+                <div class="stat-value">
+                    📄
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- NOTIFICATIONS -->
+
+        <div
+            id="notificationContainer">
+
+        </div>
+
+        <div class="footer">
+
+            © 2026 Hackathon Command Center
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script src="assets/js/notifications.js"></script>
+
+</body>
+
+</html>

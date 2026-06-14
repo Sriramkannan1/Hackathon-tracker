@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Calendar | Hackathon Command Center
+</title>
+
+<link
+rel="stylesheet"
+href="assets/css/style.css">
+
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+rel="stylesheet">
+
+<style>
+
+.calendar-wrapper{
+
+    background:rgba(30,41,59,.8);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.calendar-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.calendar-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    gap:10px;
+}
+
+.calendar-weekday{
+
+    text-align:center;
+
+    font-weight:700;
+
+    color:#38bdf8;
+
+    padding:12px;
+}
+
+.calendar-cell{
+
+    min-height:110px;
+
+    background:#0f172a;
+
+    border-radius:12px;
+
+    padding:10px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    overflow:hidden;
+}
+
+.calendar-nav{
+
+    display:flex;
+    gap:10px;
+}
+
+.calendar-nav button{
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    background:#38bdf8;
+
+    color:white;
+}
+
+.legend{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.legend-dot{
+
+    width:14px;
+    height:14px;
+    border-radius:50%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Hackathon Hub
+                </h2>
+
+                <span>
+                    Command Center
+                </span>
+
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register</span>
+            </a>
+
+            <a href="agenda.html">
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a
+                href="calendar.html"
+                class="active">
+
+                <i class="fas fa-calendar-days"></i>
+                <span>Calendar</span>
+
+            </a>
+
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a
+                href="#"
+                onclick="logoutUser()">
+
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Calendar
+                </h1>
+
+                <p>
+                    View all hackathon deadlines,
+                    rounds and submissions.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="calendar-wrapper">
+
+            <div class="calendar-header">
+
+                <div class="calendar-nav">
+
+                    <button
+                        onclick="previousMonth()">
+
+                        <i class="fas fa-chevron-left"></i>
+
+                    </button>
+
+                    <button
+                        onclick="nextMonth()">
+
+                        <i class="fas fa-chevron-right"></i>
+
+                    </button>
+
+                </div>
+
+                <h2 id="monthYear">
+
+                </h2>
+
+            </div>
+
+            <!-- WEEKDAYS -->
+
+            <div class="calendar-grid">
+
+                <div class="calendar-weekday">
+                    Sun
+                </div>
+
+                <div class="calendar-weekday">
+                    Mon
+                </div>
+
+                <div class="calendar-weekday">
+                    Tue
+                </div>
+
+                <div class="calendar-weekday">
+                    Wed
+                </div>
+
+                <div class="calendar-weekday">
+                    Thu
+                </div>
+
+                <div class="calendar-weekday">
+                    Fri
+                </div>
+
+                <div class="calendar-weekday">
+                    Sat
+                </div>
+
+            </div>
+
+            <div
+                id="calendarDays"
+                class="calendar-grid">
+
+            </div>
+
+            <!-- LEGEND -->
+
+            <div class="legend">
+
+                <div class="legend-item">
+                    <div
+                    class="legend-dot"
+                    style="
+                    background:#f59e0b;
+                    ">
+                    </div>
+                    PPT
+                </div>
+
+                <div class="legend-item">
+                    <div
+                    class="legend-dot"
+                    style="
+                    background:#22c55e;
+                    ">
+                    </div>
+                    Video
+                </div>
+
+                <div class="legend-item">
+                    <div
+                    class="legend-dot"
+                    style="
+                    background:#ef4444;
+                    ">
+                    </div>
+                    Report
+                </div>
+
+                <div class="legend-item">
+                    <div
+                    class="legend-dot"
+                    style="
+                    background:#8b5cf6;
+                    ">
+                    </div>
+                    Round
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+
+            © 2026 Hackathon Command Center
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/calendar.js"></script>
+
+</body>
+
+</html>

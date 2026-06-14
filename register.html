@@ -1,0 +1,541 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register Hackathon | Hackathon Command Center</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+                <h2>Hackathon Hub</h2>
+                <span>Command Center</span>
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html" class="active">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register Hackathon</span>
+            </a>
+
+            <a href="agenda.html">
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="calendar.html">
+                <i class="fas fa-calendar-days"></i>
+                <span>Calendar</span>
+            </a>
+
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a href="#" onclick="logoutUser()">
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Register Hackathon
+                </h1>
+
+                <p>
+                    Add a new hackathon and automatically
+                    generate tasks, deadlines and reminders.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="card fade-in">
+
+            <form id="hackathonForm">
+
+                <!-- =====================================
+                     BASIC DETAILS
+                ====================================== -->
+
+                <h2 style="margin-bottom:20px;">
+                    Basic Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Hackathon Name *</label>
+                        <input
+                            type="text"
+                            id="hackathonName"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Organizer *</label>
+                        <input
+                            type="text"
+                            id="organizer"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mode</label>
+                        <select
+                            id="mode"
+                            class="form-control">
+
+                            <option>Online</option>
+                            <option>Offline</option>
+                            <option>Hybrid</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Website Link</label>
+                        <input
+                            type="url"
+                            id="website"
+                            class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Registration Date</label>
+                        <input
+                            type="date"
+                            id="registrationDate"
+                            class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Registration Deadline</label>
+                        <input
+                            type="date"
+                            id="registrationDeadline"
+                            class="form-control">
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>
+                        Summary About Hackathon *
+                    </label>
+
+                    <textarea
+                        id="summary"
+                        class="form-control"
+                        required></textarea>
+
+                </div>
+
+                <!-- =====================================
+                     TEAM
+                ====================================== -->
+
+                <br><br>
+
+                <h2 style="margin-bottom:20px;">
+                    Team Details
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Team Created
+                        </label>
+
+                        <select
+                            id="teamCreated"
+                            class="form-control">
+
+                            <option  value="Yes">Yes</option>
+                            <option  value="No">No</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Team Leader
+                        </label>
+
+                        <input
+                            type="text"
+                            id="teamLeader"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Registration Fees
+                        </label>
+
+                        <input
+                            type="number"
+                            id="fees"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Confirmation Received
+                        </label>
+
+                        <select
+                            id="confirmationReceived"
+                            class="form-control">
+
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- =====================================
+                     PROBLEM
+                ====================================== -->
+
+                <br><br>
+
+                <h2 style="margin-bottom:20px;">
+                    Problem Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Problem Theme
+                        </label>
+
+                        <input
+                            type="text"
+                            id="problemTheme"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>
+                        Problem Statement
+                    </label>
+
+                    <textarea
+                        id="problemStatement"
+                        class="form-control"></textarea>
+
+                </div>
+
+                <!-- =====================================
+                     ROUNDS
+                ====================================== -->
+
+                <br><br>
+
+                <h2 style="margin-bottom:20px;">
+                    Round Details
+                </h2>
+
+                <div class="form-group">
+
+                    <label>
+                        Number Of Rounds
+                    </label>
+
+                    <select
+                        id="numberOfRounds"
+                        class="form-control">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="1">
+                            1
+                        </option>
+
+                        <option value="2">
+                            2
+                        </option>
+
+                        <option value="3">
+                            3
+                        </option>
+
+                        <option value="4">
+                            4
+                        </option>
+
+                        <option value="5">
+                            5
+                        </option>
+
+                        <option value="6">
+                            6
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div id="roundsContainer"></div>
+
+                <!-- =====================================
+                     DELIVERABLES
+                ====================================== -->
+
+                <br><br>
+
+                <h2 style="margin-bottom:20px;">
+                    Deliverables
+                </h2>
+
+                <div class="form-grid">
+
+                    <!-- PPT -->
+
+                    <div class="round-card">
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="pptRequired">
+
+                            <label>
+                                PPT Required
+                            </label>
+
+                        </div>
+
+                        <br>
+
+                        <input
+                            type="date"
+                            id="pptDate"
+                            class="form-control">
+
+                    </div>
+
+                    <!-- VIDEO -->
+
+                    <div class="round-card">
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="videoRequired">
+
+                            <label>
+                                Video Required
+                            </label>
+
+                        </div>
+
+                        <br>
+
+                        <input
+                            type="date"
+                            id="videoDate"
+                            class="form-control">
+
+                    </div>
+
+                    <!-- REPORT -->
+
+                    <div class="round-card">
+
+                        <div class="checkbox-group">
+
+                            <input
+                                type="checkbox"
+                                id="reportRequired">
+
+                            <label>
+                                Report Required
+                            </label>
+
+                        </div>
+
+                        <br>
+
+                        <input
+                            type="date"
+                            id="reportDate"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <!-- =====================================
+                     RESULT SECTION
+                ====================================== -->
+
+                <br><br>
+
+                <h2 style="margin-bottom:20px;">
+                    Current Status
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Selected Round
+                        </label>
+
+                        <input
+                            type="text"
+                            id="selectedRound"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Place Achieved
+                        </label>
+
+                        <input
+                            type="text"
+                            id="placeAchieved"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <!-- =====================================
+                     SUBMIT
+                ====================================== -->
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    <i class="fas fa-save"></i>
+
+                    Save Hackathon
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="footer">
+
+            © 2026 Hackathon Command Center
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script>
+
+    checkAuth();
+
+    const roundSelect =
+        document.getElementById(
+            "numberOfRounds"
+        );
+
+    roundSelect.addEventListener(
+        "change",
+        generateRounds
+    );
+
+</script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+Agenda | Hackathon Command Center
+</title>
+
+<link rel="stylesheet"
+      href="assets/css/style.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+                <h2>Hackathon Hub</h2>
+                <span>Command Center</span>
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register</span>
+            </a>
+
+            <a href="agenda.html"
+               class="active">
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="calendar.html">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a href="#"
+               onclick="logoutUser()">
+
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Agenda
+                </h1>
+
+                <p>
+                    All hackathon tasks sorted by urgency.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- TODAY -->
+
+        <div class="agenda-section">
+
+            <h2 class="agenda-title">
+
+                🔴 Today
+
+            </h2>
+
+            <div id="todayTasks">
+
+            </div>
+
+        </div>
+
+        <!-- TOMORROW -->
+
+        <div class="agenda-section">
+
+            <h2 class="agenda-title">
+
+                🟠 Tomorrow
+
+            </h2>
+
+            <div id="tomorrowTasks">
+
+            </div>
+
+        </div>
+
+        <!-- THIS WEEK -->
+
+        <div class="agenda-section">
+
+            <h2 class="agenda-title">
+
+                🟡 This Week
+
+            </h2>
+
+            <div id="weekTasks">
+
+            </div>
+
+        </div>
+
+        <!-- FUTURE -->
+
+        <div class="agenda-section">
+
+            <h2 class="agenda-title">
+
+                🟢 Future
+
+            </h2>
+
+            <div id="futureTasks">
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script src="assets/js/agenda.js"></script>
+
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Agenda | Hackathon Command Center
+</title>
+
+<link
+rel="stylesheet"
+href="assets/css/style.css">
+
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🚀
+            </div>
+
+            <div class="logo-text">
+                <h2>
+                    Hackathon Hub
+                </h2>
+                <span>
+                    Command Center
+                </span>
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="register.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Register</span>
+            </a>
+
+            <a
+            href="agenda.html"
+            class="active">
+
+                <i class="fas fa-list-check"></i>
+                <span>Agenda</span>
+
+            </a>
+
+            <a href="recommendations.html">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="calendar.html">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a
+            href="#"
+            onclick="logoutUser()">
+
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Agenda
+                </h1>
+
+                <p>
+                    Sorted task timeline across
+                    all hackathons
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- TODAY -->
+
+        <div class="agenda-section">
+
+            <h2
+            class="agenda-title"
+            style="color:#ef4444">
+
+                🔴 Today
+
+            </h2>
+
+            <div id="todayTasks">
+
+            </div>
+
+        </div>
+
+        <!-- TOMORROW -->
+
+        <div class="agenda-section">
+
+            <h2
+            class="agenda-title"
+            style="color:#f59e0b">
+
+                🟠 Tomorrow
+
+            </h2>
+
+            <div id="tomorrowTasks">
+
+            </div>
+
+        </div>
+
+        <!-- WEEK -->
+
+        <div class="agenda-section">
+
+            <h2
+            class="agenda-title"
+            style="color:#38bdf8">
+
+                🔵 This Week
+
+            </h2>
+
+            <div id="weekTasks">
+
+            </div>
+
+        </div>
+
+        <!-- FUTURE -->
+
+        <div class="agenda-section">
+
+            <h2
+            class="agenda-title"
+            style="color:#22c55e">
+
+                🟢 Future
+
+            </h2>
+
+            <div id="futureTasks">
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+
+            © 2026 Hackathon Command Center
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+
+<script src="assets/js/agenda.js"></script>
+
+</body>
+
+</html>
