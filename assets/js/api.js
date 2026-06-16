@@ -1,5 +1,5 @@
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxA1ueOVLJtb-GV_bJ_HBaMpufdaRXJZSAKI3EzfPSehvLQX2WzBdKHYMzzu8J03J0d/exec";
+"https://script.google.com/macros/s/AKfycbzK7NCtq4h-ZbFzgTUR4G0WRGBr3zs2jWA6fd3Qy5uZeAq1oA3WL_pbBtldpWlb1Zww/exec";
 
 /* =========================================
    REGISTER USER
