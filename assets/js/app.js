@@ -176,7 +176,10 @@ async function loginUser(
 
         localStorage.setItem(
             STORAGE_KEYS.CURRENT_USER,
-            JSON.stringify(result)
+            JSON.stringify({
+                email: result.email,
+                role: result.role || "User"
+            })
         );
 
 
@@ -254,14 +257,14 @@ function initializeLoginPage() {
 
             const email =
                 document.getElementById(
-                    "email"
-                ).value;
+                    "loginEmail"
+                ).value.trim();
 
 
             const password =
                 document.getElementById(
-                    "password"
-                ).value;
+                    "loginPassword"
+                ).value.trim();
 
 
             loginUser(
@@ -310,14 +313,14 @@ function initializeSignupPage() {
 
             const email =
                 document.getElementById(
-                    "email"
-                ).value;
+                    "signupEmail"
+                ).value.trim();
 
 
             const password =
                 document.getElementById(
-                    "password"
-                ).value;
+                    "signupPassword"
+                ).value.trim();
 
 
             const confirmPassword =
@@ -338,18 +341,33 @@ function initializeSignupPage() {
             }
 
 
-            const result =
-                await apiRegister({
+            let result;
+
+            try {
+
+                result =
+                    await apiRegister({
+
+                        name,
+                        college,
+                        email,
+                        password
+
+                    });
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Google Sheet connection failed"
+                );
+
+                return;
+            }
 
 
-                    name,
-                    college,
-                    email,
-                    password
-
-
-                });
-
+            console.log(result);
 
             if (result.success) {
 
@@ -916,10 +934,22 @@ function initializeRegisterPage() {
             };
 
 
-            await apiPost({
-                action: "addHackathon",
-                ...hackathon
-            });
+            const response =
+                await apiPost({
+                    action: "addHackathon",
+                    ...hackathon
+                });
+
+            console.log(response);
+
+            if (!response.success) {
+
+                alert(
+                    "Failed to save hackathon"
+                );
+
+                return;
+            }
 
 
             const generatedTasks =
