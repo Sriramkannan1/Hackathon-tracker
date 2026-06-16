@@ -1232,3 +1232,43 @@ a {
 
 
 }
+.auth-tabs{
+    display:flex;
+    width:100%;
+    margin-bottom:25px;
+    border:1px solid #FED7AA;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.tab-btn{
+    flex:1;
+    padding:14px;
+    background:#FFF7ED;
+    color:#6B7280;
+    font-weight:600;
+    border:none;
+    transition:all .25s ease;
+}
+
+.tab-btn:hover{
+    background:#FFE7CC;
+}
+
+.tab-btn.active{
+    background:linear-gradient(
+        135deg,
+        #F97316,
+        #EA580C
+    );
+    color:white;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+    -webkit-text-fill-color:#1F2937;
+    -webkit-box-shadow:
+        0 0 0px 1000px #FFFFFF inset;
+    transition:
+        background-color 5000s ease-in-out 0s;
+}
