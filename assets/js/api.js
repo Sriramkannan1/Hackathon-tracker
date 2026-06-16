@@ -1,5 +1,5 @@
 const API_URL =
-"https://script.google.com/macros/s/AKfycbyHjFqr70ZqswMM_5_Zf4IeTEWlYAE9XX0zlAvpyiwFQ49tfyNDqCky3xbk7uo3Oirq/exec";
+"https://script.google.com/macros/s/AKfycbxA1ueOVLJtb-GV_bJ_HBaMpufdaRXJZSAKI3EzfPSehvLQX2WzBdKHYMzzu8J03J0d/exec";
 async function apiRegister(userData){
 
     const response =
