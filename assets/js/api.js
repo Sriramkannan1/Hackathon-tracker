@@ -1,6 +1,18 @@
 const API_URL =
-"https://script.google.com/macros/s/AKfycbzgy9xSrANYKI_3rKk73ekETZ57AHq_XoyPlkwrLtQy1TEOMA3v_GYkXi9Ic5hEvQlq/exec";
+"https://script.google.com/macros/s/AKfycbyHjFqr70ZqswMM_5_Zf4IeTEWlYAE9XX0zlAvpyiwFQ49tfyNDqCky3xbk7uo3Oirq/exec";
+async function apiRegister(userData){
 
+    const response =
+    await fetch(API_URL,{
+        method:"POST",
+        body:JSON.stringify({
+            action:"registerUser",
+            ...userData
+        })
+    });
+
+    return await response.json();
+}
 async function apiGet(action){
 
     const response =

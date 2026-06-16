@@ -3,9 +3,11 @@
    APP.JS
 ===================================================== */
 
+
 /* =====================================================
    STORAGE KEYS
 ===================================================== */
+
 
 const STORAGE_KEYS = {
     USERS: "hack_users",
@@ -14,19 +16,24 @@ const STORAGE_KEYS = {
     TASKS: "hack_tasks"
 };
 
+
 /* =====================================================
    DEMO USER
 ===================================================== */
 const APP_VERSION = "2.0";
 
+
 function initializeDemoUser() {
+
 
     const savedVersion =
         localStorage.getItem(
             "app_version"
         );
 
+
     if (savedVersion !== APP_VERSION) {
+
 
         const users = [
             {
@@ -36,19 +43,23 @@ function initializeDemoUser() {
             }
         ];
 
+
         localStorage.setItem(
             STORAGE_KEYS.USERS,
             JSON.stringify(users)
         );
 
+
         localStorage.removeItem(
             STORAGE_KEYS.CURRENT_USER
         );
+
 
         localStorage.setItem(
             "app_version",
             APP_VERSION
         );
+
 
         console.log(
             "User credentials updated."
@@ -57,11 +68,14 @@ function initializeDemoUser() {
 }
 initializeDemoUser();
 
+
 /* =====================================================
    UTILITIES
 ===================================================== */
 
+
 function generateId(prefix = "ID") {
+
 
     return (
         prefix +
@@ -72,7 +86,9 @@ function generateId(prefix = "ID") {
     );
 }
 
+
 function saveData(key, data) {
+
 
     localStorage.setItem(
         key,
@@ -80,14 +96,18 @@ function saveData(key, data) {
     );
 }
 
+
 function getData(key) {
+
 
     return JSON.parse(
         localStorage.getItem(key)
     ) || [];
 }
 
+
 function formatDate(date) {
+
 
     return new Date(date).toLocaleDateString(
         "en-IN",
@@ -99,15 +119,20 @@ function formatDate(date) {
     );
 }
 
+
 function daysBetween(date) {
+
 
     const today = new Date();
 
+
     const target = new Date(date);
+
 
     const diff =
         target.getTime() -
         today.getTime();
+
 
     return Math.ceil(
         diff /
@@ -115,93 +140,129 @@ function daysBetween(date) {
     );
 }
 
+
 /* =====================================================
    AUTHENTICATION
 ===================================================== */
 
-function loginUser(email, password) {
 
-    const users = getData(
-        STORAGE_KEYS.USERS
-    );
+async function loginUser(
+    email,
+    password
+) {
 
-    const user = users.find(
-        u =>
-            u.email === email &&
-            u.password === password
-    );
 
-    if (!user) {
+    try {
 
-        alert(
-            "Invalid Email or Password"
+
+        const result =
+            await apiLogin(
+                email,
+                password
+            );
+
+
+        if (!result.success) {
+
+
+            alert(
+                "Invalid Login"
+            );
+
+
+            return;
+        }
+
+
+        localStorage.setItem(
+            STORAGE_KEYS.CURRENT_USER,
+            JSON.stringify(result)
         );
 
-        return false;
+
+        window.location.href =
+            "dashboard.html";
+
+
+    } catch (error) {
+
+
+        alert(
+            "Unable to connect to server"
+        );
+
+
+        console.error(error);
     }
-
-    localStorage.setItem(
-        STORAGE_KEYS.CURRENT_USER,
-        JSON.stringify(user)
-    );
-
-    window.location.href =
-        "dashboard.html";
-
-    return true;
 }
 
+
 function logoutUser() {
+
 
     localStorage.removeItem(
         STORAGE_KEYS.CURRENT_USER
     );
 
+
     window.location.href =
         "login.html";
 }
 
+
 function checkAuth() {
+
 
     const user = localStorage.getItem(
         STORAGE_KEYS.CURRENT_USER
     );
 
+
     if (!user) {
+
 
         window.location.href =
             "login.html";
     }
 }
 
+
 /* =====================================================
    LOGIN PAGE
 ===================================================== */
 
+
 function initializeLoginPage() {
+
 
     const form =
         document.getElementById(
             "loginForm"
         );
 
+
     if (!form) return;
+
 
     form.addEventListener(
         "submit",
         function (e) {
 
+
             e.preventDefault();
+
 
             const email =
                 document.getElementById(
                     "email"
                 ).value;
 
+
             const password =
                 document.getElementById(
                     "password"
                 ).value;
+
 
             loginUser(
                 email,
@@ -210,30 +271,139 @@ function initializeLoginPage() {
         }
     );
 }
+/* =====================================================
+   SIGNUP PAGE
+===================================================== */
 
+
+function initializeSignupPage() {
+
+
+    const form =
+        document.getElementById(
+            "signupForm"
+        );
+
+
+    if (!form) return;
+
+
+    form.addEventListener(
+        "submit",
+        async function (e) {
+
+
+            e.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "name"
+                ).value;
+
+
+            const college =
+                document.getElementById(
+                    "college"
+                ).value;
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value;
+
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+
+            const confirmPassword =
+                document.getElementById(
+                    "confirmPassword"
+                ).value;
+
+
+            if (password !== confirmPassword) {
+
+
+                alert(
+                    "Passwords do not match"
+                );
+
+
+                return;
+            }
+
+
+            const result =
+                await apiRegister({
+
+
+                    name,
+                    college,
+                    email,
+                    password
+
+
+                });
+
+
+            if (result.success) {
+
+
+                alert(
+                    "Account Created Successfully"
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+
+            } else {
+
+
+                alert(
+                    result.message ||
+                    "Registration Failed"
+                );
+            }
+        }
+    );
+}
 /* =====================================================
    DYNAMIC ROUND GENERATOR
 ===================================================== */
 
+
 function generateRounds() {
+
 
     const roundCount =
         document.getElementById(
             "numberOfRounds"
         );
 
+
     const container =
         document.getElementById(
             "roundsContainer"
         );
 
+
     if (!roundCount ||
         !container) return;
+
 
     const count =
         parseInt(roundCount.value);
 
+
     container.innerHTML = "";
+
 
     for (
         let i = 1;
@@ -241,24 +411,30 @@ function generateRounds() {
         i++
     ) {
 
+
         const round = document.createElement(
             "div"
         );
 
+
         round.className =
             "round-card";
+
 
         round.innerHTML = `
             <div class="round-title">
                 Round ${i}
             </div>
 
+
             <div class="form-grid">
+
 
                 <div class="form-group">
                     <label>
                         Round Name
                     </label>
+
 
                     <input
                         type="text"
@@ -268,10 +444,12 @@ function generateRounds() {
                     >
                 </div>
 
+
                 <div class="form-group">
                     <label>
                         Round Date
                     </label>
+
 
                     <input
                         type="date"
@@ -281,10 +459,12 @@ function generateRounds() {
                     >
                 </div>
 
+
                 <div class="form-group">
                     <label>
                         Round Time
                     </label>
+
 
                     <input
                         type="time"
@@ -294,8 +474,10 @@ function generateRounds() {
                     >
                 </div>
 
+
             </div>
         `;
+
 
         container.appendChild(
             round
@@ -303,9 +485,11 @@ function generateRounds() {
     }
 }
 
+
 /* =====================================================
    TASK GENERATION ENGINE
 ===================================================== */
+
 
 function createTask(
     hackathonId,
@@ -314,43 +498,58 @@ function createTask(
     deadline
 ) {
 
+
     return {
+
 
         taskId:
             generateId("TASK"),
 
+
         hackathonId,
+
 
         hackathonName,
 
+
         taskName,
 
+
         deadline,
+
 
         status:
             "Pending"
     };
 }
 
+
 function generateTasks(data) {
 
+
     const tasks = [];
+
 
     const hackId =
         data.id;
 
+
     const name =
         data.hackathonName;
 
+
     /* PPT */
+
 
     if (
         data.pptRequired &&
         data.pptDate
     ) {
 
+
         const ppt =
             new Date(data.pptDate);
+
 
         tasks.push(
             createTask(
@@ -364,6 +563,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -376,6 +576,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -386,15 +587,19 @@ function generateTasks(data) {
         );
     }
 
+
     /* VIDEO */
+
 
     if (
         data.videoRequired &&
         data.videoDate
     ) {
 
+
         const video =
             new Date(data.videoDate);
+
 
         tasks.push(
             createTask(
@@ -408,6 +613,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -420,6 +626,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -430,17 +637,21 @@ function generateTasks(data) {
         );
     }
 
+
     /* REPORT */
+
 
     if (
         data.reportRequired &&
         data.reportDate
     ) {
 
+
         const report =
             new Date(
                 data.reportDate
             );
+
 
         tasks.push(
             createTask(
@@ -454,6 +665,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -466,6 +678,7 @@ function generateTasks(data) {
             )
         );
 
+
         tasks.push(
             createTask(
                 hackId,
@@ -476,29 +689,38 @@ function generateTasks(data) {
         );
     }
 
+
     return tasks;
 }
+
 
 /* =====================================================
    REGISTER HACKATHON
 ===================================================== */
 
+
 function initializeRegisterPage() {
+
 
     const form =
         document.getElementById(
             "hackathonForm"
         );
 
+
     if (!form) return;
+
 
     form.addEventListener(
         "submit",
-        function (e) {
+        async function (e) {
+
 
             e.preventDefault();
 
+
             const rounds = [];
+
 
             const count =
                 parseInt(
@@ -507,11 +729,13 @@ function initializeRegisterPage() {
                     ).value
                 );
 
+
             for (
                 let i = 1;
                 i <= count;
                 i++
             ) {
+
 
                 rounds.push({
                     name:
@@ -519,10 +743,12 @@ function initializeRegisterPage() {
                             `roundName${i}`
                         ).value,
 
+
                     date:
                         document.getElementById(
                             `roundDate${i}`
                         ).value,
+
 
                     time:
                         document.getElementById(
@@ -531,168 +757,192 @@ function initializeRegisterPage() {
                 });
             }
 
+
             const hackathon = {
 
-    id: generateId("HACK"),
 
-    /* BASIC DETAILS */
+                id: generateId("HACK"),
 
-    hackathonName:
-        document.getElementById(
-            "hackathonName"
-        ).value,
 
-    organizer:
-        document.getElementById(
-            "organizer"
-        ).value,
+                /* BASIC DETAILS */
 
-    summary:
-        document.getElementById(
-            "summary"
-        ).value,
 
-    mode:
-        document.getElementById(
-            "mode"
-        )?.value || "",
+                hackathonName:
+                    document.getElementById(
+                        "hackathonName"
+                    ).value,
 
-    website:
-        document.getElementById(
-            "website"
-        )?.value || "",
 
-    registrationDate:
-        document.getElementById(
-            "registrationDate"
-        )?.value || "",
+                organizer:
+                    document.getElementById(
+                        "organizer"
+                    ).value,
 
-    registrationDeadline:
-        document.getElementById(
-            "registrationDeadline"
-        )?.value || "",
 
-    teamCreated:
-    document.getElementById(
-        "teamCreated"
-    )?.value || "No",
+                summary:
+                    document.getElementById(
+                        "summary"
+                    ).value,
 
-confirmationReceived:
-    document.getElementById(
-        "confirmationReceived"
-    )?.value || "No",
 
-    teamLeader:
-        document.getElementById(
-            "teamLeader"
-        )?.value || "",
+                mode:
+                    document.getElementById(
+                        "mode"
+                    )?.value || "",
 
-    fees:
-        document.getElementById(
-            "fees"
-        )?.value || "",
 
-    /* PROBLEM DETAILS */
+                website:
+                    document.getElementById(
+                        "website"
+                    )?.value || "",
 
-    problemTheme:
-        document.getElementById(
-            "problemTheme"
-        )?.value || "",
 
-    problemStatement:
-        document.getElementById(
-            "problemStatement"
-        )?.value || "",
+                registrationDate:
+                    document.getElementById(
+                        "registrationDate"
+                    )?.value || "",
 
-    /* ROUND DETAILS */
 
-    numberOfRounds: count,
+                registrationDeadline:
+                    document.getElementById(
+                        "registrationDeadline"
+                    )?.value || "",
 
-    selectedRound:
-        document.getElementById(
-            "selectedRound"
-        )?.value || "",
 
-    placeAchieved:
-        document.getElementById(
-            "placeAchieved"
-        )?.value || "",
+                teamCreated:
+                    document.getElementById(
+                        "teamCreated"
+                    )?.value || "No",
 
-    /* SUBMISSION REQUIREMENTS */
 
-    pptRequired:
-        document.getElementById(
-            "pptRequired"
-        ).checked,
+                confirmationReceived:
+                    document.getElementById(
+                        "confirmationReceived"
+                    )?.value || "No",
 
-    pptDate:
-        document.getElementById(
-            "pptDate"
-        ).value,
 
-    videoRequired:
-        document.getElementById(
-            "videoRequired"
-        ).checked,
+                teamLeader:
+                    document.getElementById(
+                        "teamLeader"
+                    )?.value || "",
 
-    videoDate:
-        document.getElementById(
-            "videoDate"
-        ).value,
 
-    reportRequired:
-        document.getElementById(
-            "reportRequired"
-        ).checked,
+                fees:
+                    document.getElementById(
+                        "fees"
+                    )?.value || "",
 
-    reportDate:
-        document.getElementById(
-            "reportDate"
-        ).value,
 
-    /* ROUNDS ARRAY */
+                /* PROBLEM DETAILS */
 
-    rounds,
 
-    createdAt:
-        new Date()
-};
+                problemTheme:
+                    document.getElementById(
+                        "problemTheme"
+                    )?.value || "",
 
-            const hacks =
-                getData(
-                    STORAGE_KEYS.HACKATHONS
-                );
 
-            hacks.push(
-                hackathon
-            );
+                problemStatement:
+                    document.getElementById(
+                        "problemStatement"
+                    )?.value || "",
 
-            saveData(
-                STORAGE_KEYS.HACKATHONS,
-                hacks
-            );
 
-            const tasks =
-                getData(
-                    STORAGE_KEYS.TASKS
-                );
+                /* ROUND DETAILS */
 
-            tasks.push(
-                ...generateTasks(
-                    hackathon
-                )
-            );
 
-            saveData(
-                STORAGE_KEYS.TASKS,
-                tasks
-            );
+                numberOfRounds: count,
+
+
+                selectedRound:
+                    document.getElementById(
+                        "selectedRound"
+                    )?.value || "",
+
+
+                placeAchieved:
+                    document.getElementById(
+                        "placeAchieved"
+                    )?.value || "",
+
+
+                /* SUBMISSION REQUIREMENTS */
+
+
+                pptRequired:
+                    document.getElementById(
+                        "pptRequired"
+                    ).checked,
+
+
+                pptDate:
+                    document.getElementById(
+                        "pptDate"
+                    ).value,
+
+
+                videoRequired:
+                    document.getElementById(
+                        "videoRequired"
+                    ).checked,
+
+
+                videoDate:
+                    document.getElementById(
+                        "videoDate"
+                    ).value,
+
+
+                reportRequired:
+                    document.getElementById(
+                        "reportRequired"
+                    ).checked,
+
+
+                reportDate:
+                    document.getElementById(
+                        "reportDate"
+                    ).value,
+
+
+                /* ROUNDS ARRAY */
+
+
+                rounds,
+
+
+                createdAt:
+                    new Date()
+            };
+
+
+            await apiPost({
+                action: "addHackathon",
+                ...hackathon
+            });
+
+
+            const generatedTasks =
+                generateTasks(hackathon);
+
+
+            for (const task of generatedTasks) {
+
+
+                await apiPost({
+                    action: "addTask",
+                    ...task
+                });
+            }
+
 
             alert(
                 "Hackathon Registered Successfully!"
             );
 
+
             form.reset();
+
 
             document.getElementById(
                 "roundsContainer"
@@ -701,92 +951,109 @@ confirmationReceived:
     );
 }
 
+
 /* =====================================================
    DASHBOARD
 ===================================================== */
 
-function loadDashboard() {
+
+async function loadDashboard() {
+
 
     const totalHackathons =
         document.getElementById(
             "totalHackathons"
         );
 
+
     if (!totalHackathons)
         return;
 
-    const hacks =
-        getData(
-            STORAGE_KEYS.HACKATHONS
+    try {
+
+        const hacks =
+            await apiGet(
+                "hackathons"
+            );
+
+        const tasks =
+            await apiGet(
+                "tasks"
+            );
+
+        const pending =
+            tasks.filter(
+                t => t.status === "Pending"
+            );
+
+        const completed =
+            tasks.filter(
+                t => t.status === "Completed"
+            );
+
+        const upcoming =
+            pending.filter(
+                task =>
+                    daysBetween(
+                        task.deadline
+                    ) <= 7
+            );
+
+        totalHackathons.innerText =
+            hacks.length;
+
+        document.getElementById(
+            "upcomingDeadlines"
+        ).innerText =
+            upcoming.length;
+
+        document.getElementById(
+            "pendingTasks"
+        ).innerText =
+            pending.length;
+
+        document.getElementById(
+            "completedTasks"
+        ).innerText =
+            completed.length;
+
+        loadRecentHackathons(
+            hacks
         );
 
-    const tasks =
-        getData(
-            STORAGE_KEYS.TASKS
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Failed to load dashboard data."
         );
-
-    const pending =
-        tasks.filter(
-            t =>
-                t.status ===
-                "Pending"
-        );
-
-    const completed =
-        tasks.filter(
-            t =>
-                t.status ===
-                "Completed"
-        );
-
-    const upcoming =
-        pending.filter(
-            task =>
-                daysBetween(
-                    task.deadline
-                ) <= 7
-        );
-
-    totalHackathons.innerText =
-        hacks.length;
-
-    document.getElementById(
-        "upcomingDeadlines"
-    ).innerText =
-        upcoming.length;
-
-    document.getElementById(
-        "pendingTasks"
-    ).innerText =
-        pending.length;
-
-    document.getElementById(
-        "completedTasks"
-    ).innerText =
-        completed.length;
-
-    loadRecentHackathons(
-        hacks
-    );
+    }
 }
+
 
 /* =====================================================
    RECENT HACKATHONS
 ===================================================== */
 
+
 function loadRecentHackathons(
     hacks
 ) {
+
 
     const table =
         document.getElementById(
             "recentHackathons"
         );
 
+
     if (!table)
         return;
 
+
     table.innerHTML = "";
+
 
     hacks
         .slice(-5)
@@ -794,24 +1061,28 @@ function loadRecentHackathons(
         .forEach(
             hack => {
 
+
                 table.innerHTML += `
                 <tr>
                     <td>
                         ${hack.hackathonName}
                     </td>
 
+
                     <td>
                         ${hack.organizer}
                     </td>
+
 
                     <td>
                         ${hack.numberOfRounds}
                     </td>
 
+
                     <td>
                         ${formatDate(
-                            hack.createdAt
-                        )}
+                    hack.createdAt
+                )}
                     </td>
                 </tr>
             `;
@@ -819,75 +1090,88 @@ function loadRecentHackathons(
         );
 }
 
+
 /* =====================================================
    RECOMMENDATION ENGINE
 ===================================================== */
 
-function getRecommendations() {
+
+async function getRecommendations() {
+
 
     const hacks =
-        getData(
-            STORAGE_KEYS.HACKATHONS
+        await apiGet(
+            "hackathons"
         );
 
-    const recommendations =
-        [];
+    const recommendations = [];
 
-    hacks.forEach(
-        hack => {
+    hacks.forEach(hack => {
+
+        if (
+            hack.pptRequired &&
+            hack.pptDate
+        ) {
+
+            const days =
+                daysBetween(
+                    hack.pptDate
+                );
 
             if (
-                hack.pptRequired
+                days <= 5 &&
+                days >= 0
             ) {
 
-                const days =
-                    daysBetween(
-                        hack.pptDate
-                    );
+                recommendations.push({
 
-                if (
-                    days <= 5 &&
-                    days >= 0
-                ) {
+                    title:
+                        hack.hackathonName,
 
-                    recommendations.push({
+                    text:
+                        `PPT Submission in ${days} days`
 
-                        title:
-                            hack.hackathonName,
-
-                        text:
-                            `PPT Submission in ${days} days`
-                    });
-                }
+                });
             }
         }
-    );
+    });
 
     return recommendations;
 }
+
 
 /* =====================================================
    INITIALIZATION
 ===================================================== */
 
+
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
+
         initializeLoginPage();
+
+
+        initializeSignupPage();
+
 
         initializeRegisterPage();
 
+
         loadDashboard();
+
 
         const roundInput =
             document.getElementById(
                 "numberOfRounds"
             );
 
+
         if (
             roundInput
         ) {
+
 
             roundInput.addEventListener(
                 "change",

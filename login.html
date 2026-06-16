@@ -46,55 +46,124 @@
 
             <div id="loginAlert"></div>
 
-            <form id="loginForm">
+            <div class="auth-tabs">
 
-                <div class="form-group">
 
-                    <label for="email">
-                        Email Address
-                    </label>
+                <button class="tab-btn active" onclick="showLogin()" id="loginTab">
 
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control"
-                        placeholder="admin@gmail.com"
-                        required>
-
-                </div>
-
-                <br>
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        placeholder="Enter Password"
-                        required>
-
-                </div>
-
-                <br>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    style="width:100%;">
-
-                    <i class="fas fa-right-to-bracket"></i>
                     Login
 
                 </button>
 
+                <button class="tab-btn" onclick="showSignup()" id="signupTab">
+
+                    Sign Up
+
+                </button>
+
+
+            </div>
+
+            <div id="loginAlert"></div>
+
+            <!-- LOGIN FORM -->
+
+            <form id="loginForm">
+
+
+                <div class="form-group">
+
+                    <label>Email Address</label>
+
+                    <input type="email" id="loginEmail" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input type="password" id="loginPassword" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+
+                    Login
+
+                </button>
+
+
             </form>
 
-            
+            <!-- SIGNUP FORM -->
+
+            <form id="signupForm" style="display:none;">
+
+                <div class="form-group">
+
+                    <label>Full Name</label>
+
+                    <input type="text" id="name" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>College</label>
+
+                    <input type="text" id="college" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input type="email" id="signupEmail" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input type="password" id="signupPassword" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Confirm Password</label>
+
+                    <input type="password" id="confirmPassword" class="form-control" required>
+
+                </div>
+
+                <br>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+
+                    Create Account
+
+                </button>
+
+
+            </form>
+
+
 
         </div>
 
@@ -109,24 +178,23 @@
 
         loginForm.addEventListener(
             "submit",
-            function(e){
+            function (e) {
 
                 e.preventDefault();
 
                 const email =
                     document
-                    .getElementById("email")
-                    .value
-                    .trim();
+                        .getElementById("loginEmail")
+                        .value
+                        .trim();
 
                 const password =
                     document
-                    .getElementById("password")
-                    .value
-                    .trim();
+                        .getElementById("loginPassword")
+                        .value
+                        .trim();
 
-                if(email === "" || password === "")
-                {
+                if (email === "" || password === "") {
                     showAlert(
                         "Please fill all fields",
                         "danger"
@@ -134,13 +202,12 @@
                     return;
                 }
 
-                loginUser(email,password);
+                loginUser(email, password);
 
             }
         );
 
-        function showAlert(message,type)
-        {
+        function showAlert(message, type) {
 
             const alertBox =
                 document.getElementById(
@@ -148,15 +215,55 @@
                 );
 
             alertBox.innerHTML =
-            `
+                `
             <div class="alert alert-${type}">
                 ${message}
             </div>
             `;
 
-            setTimeout(()=>{
-                alertBox.innerHTML="";
-            },3000);
+            setTimeout(() => {
+                alertBox.innerHTML = "";
+            }, 3000);
+
+        }
+        function showLogin() {
+            document.getElementById(
+                "loginForm"
+            ).style.display = "block";
+
+            document.getElementById(
+                "signupForm"
+            ).style.display = "none";
+
+            document.getElementById(
+                "loginTab"
+            ).classList.add("active");
+
+            document.getElementById(
+                "signupTab"
+            ).classList.remove("active");
+
+
+        }
+
+        function showSignup() {
+
+            document.getElementById(
+                "loginForm"
+            ).style.display = "none";
+
+            document.getElementById(
+                "signupForm"
+            ).style.display = "block";
+
+            document.getElementById(
+                "signupTab"
+            ).classList.add("active");
+
+            document.getElementById(
+                "loginTab"
+            ).classList.remove("active");
+
 
         }
 
