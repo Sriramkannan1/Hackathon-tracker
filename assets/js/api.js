@@ -1,160 +1,74 @@
-const API_URL =
-"https://script.google.com/macros/s/AKfycbzK7NCtq4h-ZbFzgTUR4G0WRGBr3zs2jWA6fd3Qy5uZeAq1oA3WL_pbBtldpWlb1Zww/exec";
-
-/* =========================================
-   REGISTER USER
-========================================= */
+const API_URL = "https://script.google.com/macros/s/AKfycbzK7NCtq4h-ZbFzgTUR4G0WRGBr3zs2jWA6fd3Qy5uZeAq1oA3WL_pbBtldpWlb1Zww/exec";
 
 async function apiRegister(userData) {
-
     try {
-
-        console.log("Register Request:", userData);
-
-        const response = await fetch(
-            API_URL,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":
-                    "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify({
-                    action: "registerUser",
-                    ...userData
-                })
-            }
-        );
-
-        const result =
-        await response.json();
-
-        console.log(
-            "Register Response:",
-            result
-        );
-
-        return result;
-
-    } catch(error) {
-
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "registerUser", ...userData })
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const text = await response.text();
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
         console.error(error);
-
-        return {
-            success:false,
-            message:error.message
-        };
+        return { success: false, message: error.message };
     }
 }
 
-/* =========================================
-   LOGIN
-========================================= */
-
-async function apiLogin(
-    email,
-    password
-) {
-
+async function apiLogin(email, password) {
     try {
-
-        const response =
-        await fetch(
-
-`${API_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-
-        );
-
-        const result =
-        await response.json();
-
-        console.log(
-            "Login Response:",
-            result
-        );
-
-        return result;
-
-    } catch(error) {
-
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "login", email: email, password: password })
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const text = await response.text();
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
         console.error(error);
-
-        return {
-            success:false,
-            message:error.message
-        };
+        return { success: false, message: error.message };
     }
 }
 
-/* =========================================
-   GET DATA
-========================================= */
-
-async function apiGet(action) {
-
+async function apiGet(action, params = "") {
     try {
+        const userStr = localStorage.getItem("hack_current_user");
+        let email = "";
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            email = user.email || "";
+        }
 
-        const response =
-        await fetch(
-            `${API_URL}?action=${action}`
-        );
-
-        const result =
-        await response.json();
-
-        console.log(
-            "GET Response:",
-            result
-        );
-
-        return result;
-
-    } catch(error) {
-
+        const response = await fetch(`${API_URL}?action=${action}&email=${encodeURIComponent(email)}${params}`);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const text = await response.text();
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
         console.error(error);
-
         return [];
     }
 }
 
-/* =========================================
-   POST DATA
-========================================= */
-
 async function apiPost(data) {
-
     try {
+        const userStr = localStorage.getItem("hack_current_user");
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            if (user.email) data.ownerEmail = user.email;
+        }
 
-        const response =
-        await fetch(
-            API_URL,
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":
-                    "text/plain;charset=utf-8"
-                },
-                body:JSON.stringify(data)
-            }
-        );
-
-        const result =
-        await response.json();
-
-        console.log(
-            "POST Response:",
-            result
-        );
-
-        return result;
-
-    } catch(error) {
-
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const text = await response.text();
+        return text ? JSON.parse(text) : {};
+    } catch (error) {
         console.error(error);
-
-        return {
-            success:false,
-            message:error.message
-        };
+        return { success: false, message: error.message };
     }
 }

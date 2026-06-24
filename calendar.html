@@ -1,522 +1,498 @@
++
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-Calendar | Hackathon Command Center
-</title>
+    <title>
+        Calendar | Hackathon Command Center
+    </title>
 
-<link
-rel="stylesheet"
-href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
-<style>
+    <style>
+        .calendar-wrapper {
 
-.calendar-wrapper{
+            background: #FFFFFF;
 
-    background:#FFFFFF;
+            border-radius: 24px;
 
-    border-radius:24px;
+            padding: 30px;
 
-    padding:30px;
+            border: 1px solid #FED7AA;
 
-    border:1px solid #FED7AA;
+            box-shadow:
+                0 12px 35px rgba(249, 115, 22, .08);
+        }
 
-    box-shadow:
-    0 12px 35px rgba(249,115,22,.08);
-}
+        .calendar-header {
 
-.calendar-header{
+            display: flex;
 
-    display:flex;
+            justify-content: space-between;
 
-    justify-content:space-between;
+            align-items: center;
 
-    align-items:center;
+            margin-bottom: 30px;
+        }
 
-    margin-bottom:30px;
-}
+        .calendar-header h2 {
 
-.calendar-header h2{
+            color: #111827;
 
-    color:#111827;
+            font-size: 28px;
 
-    font-size:28px;
+            font-weight: 800;
+        }
 
-    font-weight:800;
-}
+        .calendar-grid {
 
-.calendar-grid{
+            display: grid;
 
-    display:grid;
+            grid-template-columns:
+                repeat(7, 1fr);
 
-    grid-template-columns:
-    repeat(7,1fr);
+            gap: 12px;
+        }
 
-    gap:12px;
-}
+        .calendar-weekday {
 
-.calendar-weekday{
+            text-align: center;
 
-    text-align:center;
+            font-weight: 700;
 
-    font-weight:700;
+            color: #EA580C;
 
-    color:#EA580C;
+            background: #FFF7ED;
 
-    background:#FFF7ED;
+            border: 1px solid #FED7AA;
 
-    border:1px solid #FED7AA;
+            border-radius: 12px;
 
-    border-radius:12px;
+            padding: 14px;
+        }
 
-    padding:14px;
-}
+        .calendar-cell {
 
-.calendar-cell{
+            min-height: 120px;
 
-    min-height:120px;
+            background: #FFFFFF;
 
-    background:#FFFFFF;
+            border-radius: 14px;
 
-    border-radius:14px;
+            padding: 10px;
 
-    padding:10px;
+            border: 1px solid #FED7AA;
 
-    border:1px solid #FED7AA;
+            overflow: hidden;
 
-    overflow:hidden;
+            transition: .25s ease;
 
-    transition:.25s ease;
+            color: #1F2937;
+        }
 
-    color:#1F2937;
-}
+        .calendar-cell:hover {
 
-.calendar-cell:hover{
+            transform: translateY(-3px);
 
-    transform:translateY(-3px);
+            box-shadow:
+                0 8px 18px rgba(249, 115, 22, .10);
 
-    box-shadow:
-    0 8px 18px rgba(249,115,22,.10);
+            background: #FFFDF8;
+        }
 
-    background:#FFFDF8;
-}
+        .calendar-nav {
 
-.calendar-nav{
+            display: flex;
 
-    display:flex;
+            gap: 12px;
+        }
 
-    gap:12px;
-}
+        .calendar-nav button {
 
-.calendar-nav button{
+            padding: 12px 18px;
 
-    padding:12px 18px;
+            border-radius: 12px;
 
-    border-radius:12px;
+            border: none;
 
-    border:none;
+            cursor: pointer;
 
-    cursor:pointer;
+            background: linear-gradient(135deg,
+                    #FB923C,
+                    #EA580C);
 
-    background:linear-gradient(
-        135deg,
-        #FB923C,
-        #EA580C
-    );
+            color: white;
 
-    color:white;
+            font-size: 15px;
 
-    font-size:15px;
+            font-weight: 600;
 
-    font-weight:600;
+            transition: .25s ease;
+        }
 
-    transition:.25s ease;
-}
+        .calendar-nav button:hover {
 
-.calendar-nav button:hover{
+            transform: translateY(-2px);
 
-    transform:translateY(-2px);
+            box-shadow:
+                0 10px 20px rgba(249, 115, 22, .20);
+        }
 
-    box-shadow:
-    0 10px 20px rgba(249,115,22,.20);
-}
+        .legend {
 
-.legend{
+            display: flex;
 
-    display:flex;
+            flex-wrap: wrap;
 
-    flex-wrap:wrap;
+            gap: 18px;
 
-    gap:18px;
+            margin-top: 30px;
 
-    margin-top:30px;
+            padding-top: 20px;
 
-    padding-top:20px;
+            border-top: 1px solid #FED7AA;
+        }
 
-    border-top:1px solid #FED7AA;
-}
+        .legend-item {
 
-.legend-item{
+            display: flex;
 
-    display:flex;
+            align-items: center;
 
-    align-items:center;
+            gap: 10px;
 
-    gap:10px;
+            color: #374151;
 
-    color:#374151;
+            font-weight: 500;
+        }
 
-    font-weight:500;
-}
+        .legend-dot {
 
-.legend-dot{
+            width: 14px;
 
-    width:14px;
+            height: 14px;
 
-    height:14px;
+            border-radius: 50%;
+        }
 
-    border-radius:50%;
-}
+        .legend-item:nth-child(1) .legend-dot {
 
-.legend-item:nth-child(1) .legend-dot{
+            background: #F59E0B;
+        }
 
-    background:#F59E0B;
-}
+        .legend-item:nth-child(2) .legend-dot {
 
-.legend-item:nth-child(2) .legend-dot{
+            background: #22C55E;
+        }
 
-    background:#22C55E;
-}
+        .legend-item:nth-child(3) .legend-dot {
 
-.legend-item:nth-child(3) .legend-dot{
+            background: #EF4444;
+        }
 
-    background:#EF4444;
-}
+        .legend-item:nth-child(4) .legend-dot {
 
-.legend-item:nth-child(4) .legend-dot{
+            background: #8B5CF6;
+        }
 
-    background:#8B5CF6;
-}
+        .calendar-event {
 
-.calendar-event{
+            padding: 4px 8px;
 
-    padding:4px 8px;
+            margin-top: 5px;
 
-    margin-top:5px;
+            border-radius: 8px;
 
-    border-radius:8px;
+            font-size: 11px;
 
-    font-size:11px;
+            font-weight: 600;
 
-    font-weight:600;
+            color: white;
 
-    color:white;
+            overflow: hidden;
 
-    overflow:hidden;
+            white-space: nowrap;
 
-    white-space:nowrap;
+            text-overflow: ellipsis;
+        }
 
-    text-overflow:ellipsis;
-}
+        .calendar-event.ppt {
 
-.calendar-event.ppt{
+            background: #F59E0B;
+        }
 
-    background:#F59E0B;
-}
+        .calendar-event.video {
 
-.calendar-event.video{
+            background: #22C55E;
+        }
 
-    background:#22C55E;
-}
+        .calendar-event.report {
 
-.calendar-event.report{
+            background: #EF4444;
+        }
 
-    background:#EF4444;
-}
+        .calendar-event.round {
 
-.calendar-event.round{
+            background: #8B5CF6;
+        }
 
-    background:#8B5CF6;
-}
+        @media(max-width:992px) {
 
-@media(max-width:992px){
+            .calendar-grid {
 
-    .calendar-grid{
+                grid-template-columns:
+                    repeat(7, minmax(80px, 1fr));
 
-        grid-template-columns:
-        repeat(7,minmax(80px,1fr));
+                overflow-x: auto;
+            }
 
-        overflow-x:auto;
-    }
+            .calendar-cell {
 
-    .calendar-cell{
+                min-height: 100px;
+            }
+        }
 
-        min-height:100px;
-    }
-}
+        @media(max-width:768px) {
 
-@media(max-width:768px){
+            .calendar-header {
 
-    .calendar-header{
+                flex-direction: column;
 
-        flex-direction:column;
+                gap: 20px;
+            }
 
-        gap:20px;
-    }
+            .calendar-header h2 {
 
-    .calendar-header h2{
+                font-size: 24px;
+            }
 
-        font-size:24px;
-    }
+            .legend {
 
-    .legend{
-
-        justify-content:center;
-    }
-}
-
-</style>
+                justify-content: center;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <!-- SIDEBAR -->
+        <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+        <aside class="sidebar">
 
-        <div class="logo">
+            <div class="logo">
 
-            <div class="logo-icon">
-                🚀
-            </div>
-
-            <div class="logo-text">
-
-                <h2>
-                    Hackathon Hub
-                </h2>
-
-                <span>
-                    Command Center
-                </span>
-
-            </div>
-
-        </div>
-
-        <nav class="nav-links">
-
-            <a href="dashboard.html">
-                <i class="fas fa-chart-line"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="register.html">
-                <i class="fas fa-plus-circle"></i>
-                <span>Register</span>
-            </a>
-
-            <a href="agenda.html">
-                <i class="fas fa-list-check"></i>
-                <span>Agenda</span>
-            </a>
-
-            <a href="recommendations.html">
-                <i class="fas fa-lightbulb"></i>
-                <span>Recommendations</span>
-            </a>
-
-            <a
-                href="calendar.html"
-                class="active">
-
-                <i class="fas fa-calendar-days"></i>
-                <span>Calendar</span>
-
-            </a>
-
-            <a href="notifications.html">
-                <i class="fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-
-            <a
-                href="#"
-                onclick="logoutUser()">
-
-                <i class="fas fa-right-from-bracket"></i>
-                <span>Logout</span>
-
-            </a>
-
-        </nav>
-
-    </aside>
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <div class="page-header">
-
-            <div class="page-title">
-
-                <h1>
-                    Calendar
-                </h1>
-
-                <p>
-                    View all hackathon deadlines,
-                    rounds and submissions.
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="calendar-wrapper">
-
-            <div class="calendar-header">
-
-                <div class="calendar-nav">
-
-                    <button
-                        onclick="previousMonth()">
-
-                        <i class="fas fa-chevron-left"></i>
-
-                    </button>
-
-                    <button
-                        onclick="nextMonth()">
-
-                        <i class="fas fa-chevron-right"></i>
-
-                    </button>
-
+                <div class="logo-icon">
+                    🚀
                 </div>
 
-                <h2 id="monthYear">
+                <div class="logo-text">
 
-                </h2>
+                    <h2>
+                        Hackathon Hub
+                    </h2>
 
-            </div>
+                    <span>
+                        Command Center
+                    </span>
 
-            <!-- WEEKDAYS -->
-
-            <div class="calendar-grid">
-
-                <div class="calendar-weekday">
-                    Sun
-                </div>
-
-                <div class="calendar-weekday">
-                    Mon
-                </div>
-
-                <div class="calendar-weekday">
-                    Tue
-                </div>
-
-                <div class="calendar-weekday">
-                    Wed
-                </div>
-
-                <div class="calendar-weekday">
-                    Thu
-                </div>
-
-                <div class="calendar-weekday">
-                    Fri
-                </div>
-
-                <div class="calendar-weekday">
-                    Sat
                 </div>
 
             </div>
 
-            <div
-                id="calendarDays"
-                class="calendar-grid">
+            <nav class="nav-links">
+
+                <a href="dashboard.html">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="register.html">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Register</span>
+                </a>
+
+                <a href="agenda.html">
+                    <i class="fas fa-list-check"></i>
+                    <span>Agenda</span>
+                </a>
+
+                <a href="recommendations.html">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Recommendations</span>
+                </a>
+
+                <a href="calendar.html" class="active">
+
+                    <i class="fas fa-calendar-days"></i>
+                    <span>Calendar</span>
+
+                </a>
+
+                <a href="notifications.html">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+
+                <a href="#" onclick="logoutUser()">
+
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Logout</span>
+
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- MAIN -->
+
+        <main class="main">
+
+            <div class="page-header">
+
+                <div class="page-title">
+
+                    <h1>
+                        Calendar
+                    </h1>
+
+                    <p>
+                        View all hackathon deadlines,
+                        rounds and submissions.
+                    </p>
+
+                </div>
 
             </div>
 
-            <!-- LEGEND -->
+            <div class="calendar-wrapper">
 
-            <div class="legend">
+                <div class="calendar-header">
 
-                <div class="legend-item">
-                    <div
-                    class="legend-dot"
-                    style="
+                    <div class="calendar-nav">
+
+                        <button onclick="previousMonth()">
+
+                            <i class="fas fa-chevron-left"></i>
+
+                        </button>
+
+                        <button onclick="nextMonth()">
+
+                            <i class="fas fa-chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+                    <h2 id="monthYear">
+
+                    </h2>
+
+                </div>
+
+                <!-- WEEKDAYS -->
+
+                <div class="calendar-grid">
+
+                    <div class="calendar-weekday">
+                        Sun
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Mon
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Tue
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Wed
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Thu
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Fri
+                    </div>
+
+                    <div class="calendar-weekday">
+                        Sat
+                    </div>
+
+                </div>
+
+                <div id="calendarDays" class="calendar-grid">
+
+                </div>
+
+                <!-- LEGEND -->
+
+                <div class="legend">
+
+                    <div class="legend-item">
+                        <div class="legend-dot" style="
                     background:#f59e0b;
                     ">
+                        </div>
+                        PPT
                     </div>
-                    PPT
-                </div>
 
-                <div class="legend-item">
-                    <div
-                    class="legend-dot"
-                    style="
+                    <div class="legend-item">
+                        <div class="legend-dot" style="
                     background:#22c55e;
                     ">
+                        </div>
+                        Video
                     </div>
-                    Video
-                </div>
 
-                <div class="legend-item">
-                    <div
-                    class="legend-dot"
-                    style="
+                    <div class="legend-item">
+                        <div class="legend-dot" style="
                     background:#ef4444;
                     ">
+                        </div>
+                        Report
                     </div>
-                    Report
-                </div>
 
-                <div class="legend-item">
-                    <div
-                    class="legend-dot"
-                    style="
+                    <div class="legend-item">
+                        <div class="legend-dot" style="
                     background:#8b5cf6;
                     ">
+                        </div>
+                        Round
                     </div>
-                    Round
+
                 </div>
 
             </div>
 
-        </div>
+            <div class="footer">
 
-        <div class="footer">
+                © 2026 Hackathon Command Center
 
-            © 2026 Hackathon Command Center
+            </div>
 
-        </div>
+        </main>
 
-    </main>
+    </div>
 
-</div>
-
-<script src="assets/js/app.js"></script>
-<script src="assets/js/calendar.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/calendar.js"></script>
 
 </body>
 

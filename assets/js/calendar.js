@@ -5,12 +5,9 @@
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 
-function getCalendarEvents() {
+async function getCalendarEvents() {
 
-    const hacks =
-        getData(
-            STORAGE_KEYS.HACKATHONS
-        );
+    const hacks = await apiGet("getUserHackathons");
 
     let events = [];
 
@@ -85,7 +82,7 @@ function getCalendarEvents() {
     return events;
 }
 
-function renderCalendar() {
+async function renderCalendar() {
 
     const monthYear =
         document.getElementById(
@@ -102,8 +99,7 @@ function renderCalendar() {
         !calendarDays
     ) return;
 
-    const events =
-        getCalendarEvents();
+    const events = await getCalendarEvents();
 
     const firstDay =
         new Date(
